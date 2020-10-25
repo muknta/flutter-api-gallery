@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'manager.dart';
 
 
 class ImagePage extends StatefulWidget {
-  ImagePage(String link)
-    : link = link;
+  ImagePage(String link) : link = link;
 
   final String link;
 
@@ -52,12 +52,10 @@ class _ImagePageState extends State<ImagePage> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text("Picture"),
-        centerTitle: true,
+        // centerTitle: true,
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              // Icons.favorite_outline_sharp,
-              // Icons.favorite_sharp,
               Icons.exposure_plus_2,
               color: Colors.black,
             ),
@@ -83,6 +81,14 @@ class _ImagePageState extends State<ImagePage> {
                 );
               }
             },
+          ),
+          IconButton(
+            icon: Icon(
+              // Icons.favorite_sharp,
+              Icons.favorite_outline_sharp,
+              color: Colors.black,
+            ),
+            onPressed: () { /* via SharedPreferences */ }
           ),
         ],
       ),

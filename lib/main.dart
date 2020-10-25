@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'post_data.dart';
 import 'image_page.dart';
 import 'manager.dart';
@@ -18,7 +19,6 @@ GestureDetector imageBtnByLink(String link, BuildContext context) {
         MaterialPageRoute(builder: (context) => ImagePage(link)),
       );
     },
-    // behavior: HitTestBehavior.translucent,
     child: Container(
       padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: Image.network(addAccessPartOfUrl(link)),
@@ -75,10 +75,13 @@ class _MainPageState extends State<MainPage> {
               futureAlbum = fetchAlbum();
             });
           },
-          child: Text("Rand"),
+          child: Container(
+            padding: const EdgeInsets.only(left: 3.0, top: 18.0),
+            child: Text("Update"),
+          ),
         ),
         title: Text(widget.title),
-        centerTitle: true,
+        // centerTitle: true,
       ),
       body: FutureBuilder<Album>(
         future: futureAlbum,
