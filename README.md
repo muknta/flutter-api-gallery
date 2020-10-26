@@ -1,16 +1,26 @@
-# api_gallery
+# Flutter API mini-Gallery
 
-A new Flutter project.
+This app takes API from [unsplash](https://unsplash.com/) and displays it.
 
-## Getting Started
+## Structure
+* main page - mini-gallery with 10 photos - by tap on each photo you will be redirected to image page.
+* image page - displays chosen photo.
 
-This project is a starting point for a Flutter application.
+## Uses
+[flutter_staggered_grid_view](https://pub.dev/packages/flutter_staggered_grid_view)
+for dynamic padding elements in gallery
 
-A few resources to get you started if this is your first Flutter project:
+## Running
+1. Enable USB debugging
+2. Connect your device to computer
+3. Check, if computer has found device:
+```code
+flutter devices
+```
+4. Run a project:
+```code
+flutter run
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### [Getting started with Flutter](https://flutter.dev/docs/get-started/install)
