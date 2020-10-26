@@ -6,7 +6,7 @@ import 'manager.dart';
 
 Future<Album> fetchAlbum() async {
   final response = await http.get(
-    addAccessPartOfUrl('https://api.unsplash.com/photos')
+    addAccessPartOfUrl(getPhotosAPI())
     // 'https://api.unsplash.com/photos/random?count=${cnfg.imagesNum}/?client_id=${cnfg.unsplashToken}'
   );
 
@@ -18,20 +18,37 @@ Future<Album> fetchAlbum() async {
 }
 
 class Album {
-  List<String> imageLinks;
+  List<Photo> photoList;
 
-  Album(List<String> imageLinks) {
-  	this.imageLinks = imageLinks;
+  Album(List<Photo> photoList) {
+  	this.photoList = photoList;
   }
 
   // List<Map<String, dynamic>> json
   factory Album.fromJson(List<dynamic> json) {
-  	print('here JSONNN');
-    print(json);
-
-
+    // print(json);
     return Album(
-    	json.map((query) => query['urls']['small'].toString()).toList()
+    	json.map((q) => Photo(q['id'],
+    												q['user']['username'],
+    												q['description'],
+    												q['urls']['raw'])).toList()
     );
   }
+}
+
+
+class Photo {
+	String photoId, authorName, description, rawUrl;
+
+	Photo(photoId, authorName, description, rawUrl) {
+  	this.photoId = photoId;
+  	this.authorName = authorName;
+  	this.description = (description != null) ? description : 'no description';
+  	this.rawUrl = rawUrl;
+  }
+
+	String urlWithWidth(int width) =>
+		'${rawUrl}&w=${width}&q=80&fm=jpg&crop=entropy&cs=tinysrgb&fit=max';
+
+
 }

@@ -4,9 +4,9 @@ import 'manager.dart';
 
 
 class ImagePage extends StatefulWidget {
-  ImagePage(String link) : link = link;
-
   final String link;
+
+  ImagePage(String link) : link = link;
 
   @override
   _ImagePageState createState() => _ImagePageState();
@@ -60,7 +60,7 @@ class _ImagePageState extends State<ImagePage> {
               color: Colors.black,
             ),
             onPressed: () {
-              if (fixScale > 0.3) {
+              if (fixScale > 1.0) {
                 _adjustImage(
                   addAccessPartOfUrl(widget.link),
                   fixScale - scaleUnit

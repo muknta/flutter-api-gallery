@@ -6,23 +6,37 @@ import 'post_data.dart';
 import 'image_page.dart';
 import 'manager.dart';
 
+final int listImageWidth = 100;
+final int fullImageWidth = 500;
 
-List<GestureDetector> imageBtnList(List<String> imageLinks, BuildContext context) {
-  return imageLinks.map((link) => imageBtnByLink(link, context)).toList();
+
+List<Widget> imageList(List<Photo> photoList, BuildContext context) {
+  return photoList.map((photoObj) => imageBlock(photoObj, context)).toList();
 }
 
-GestureDetector imageBtnByLink(String link, BuildContext context) {
-  return GestureDetector(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ImagePage(link)),
-      );
-    },
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-      child: Image.network(addAccessPartOfUrl(link)),
-    ),
+Widget imageBlock(Photo photoObj, BuildContext context) {
+  String author = photoObj.authorName;
+  String desc = photoObj.description;
+  String link = photoObj.urlWithWidth(listImageWidth);
+
+  return Column(
+    children: <Widget>[
+      GestureDetector(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) =>
+              ImagePage(photoObj.urlWithWidth(fullImageWidth))),
+          );
+        },
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+          child: Image.network(addAccessPartOfUrl(link)),
+        ),
+      ),
+      Text(author),
+      Text(desc),
+    ],
   );
 }
 
@@ -76,7 +90,7 @@ class _MainPageState extends State<MainPage> {
             });
           },
           child: Container(
-            padding: const EdgeInsets.only(left: 3.0, top: 18.0),
+            padding: const EdgeInsets.only(left: 3.0, top: 20.0),
             child: Text("Update"),
           ),
         ),
@@ -89,7 +103,7 @@ class _MainPageState extends State<MainPage> {
           if (snapshot.hasData) {
             return Center(
               child: ListView(
-                children: imageBtnList(snapshot.data.imageLinks, context),
+                children: imageList(snapshot.data.photoList, context),
               ),
             );
           } else if (snapshot.hasError) {
