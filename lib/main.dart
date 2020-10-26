@@ -2,11 +2,12 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'post_data.dart';
 import 'image_page.dart';
 import 'manager.dart';
 
-final int listImageWidth = 130;
+final int listImageWidth = 200;
 final int fullImageWidth = 500;
 
 
@@ -34,7 +35,10 @@ Widget imageBlock(Photo photoObj, BuildContext context) {
           child: Image.network(addAccessPartOfUrl(link)),
         ),
       ),
-      Text(author),
+      Text(
+        author,
+        style: TextStyle(fontWeight: FontWeight.bold),
+      ),
       Text(desc),
     ],
   );
@@ -79,8 +83,10 @@ class _MainPageState extends State<MainPage> {
     futureAlbum = fetchAlbum();
   }
 
+
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -100,21 +106,25 @@ class _MainPageState extends State<MainPage> {
         future: futureAlbum,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            List<Widget> someWidg = imageList(snapshot.data.photoList, context);
+
             return Center(
-              child: GridView.count(
+              child: StaggeredGridView.count(
                 primary: false,
-                padding: const EdgeInsets.only(left: 10, top: 10),
-                // childAspectRatio: (itemWidth / itemHeight),
-                // crossAxisSpacing: 10,
-                // mainAxisSpacing: 10,
-                crossAxisCount: 2,
-                children: imageList(snapshot.data.photoList, context),
+                // padding: const EdgeInsets.only(left: 10, top: 10),
+                crossAxisCount: 4,
+                staggeredTiles: someWidg.map<StaggeredTile>((_) => StaggeredTile.fit(2))
+                    .toList(),
+                mainAxisSpacing: 3.0,
+                crossAxisSpacing: 4.0,
+                children: someWidg,
               ),
             );
           } else if (snapshot.hasError) {
             return Text("${snapshot.error}");
           }
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator());
         },
       ),
     );
