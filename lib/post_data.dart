@@ -5,10 +5,7 @@ import 'manager.dart';
 
 
 Future<Album> fetchAlbum() async {
-  final response = await http.get(
-    addAccessPartOfUrl(getPhotosAPI())
-    // 'https://api.unsplash.com/photos/random?count=${cnfg.imagesNum}/?client_id=${cnfg.unsplashToken}'
-  );
+  final response = await http.get(addAccessPartOfUrl(getPhotosAPI()));
 
   if (response.statusCode == 200) {
     return Album.fromJson(jsonDecode(response.body));
@@ -49,6 +46,9 @@ class Photo {
 
 	String urlWithWidth(int width) =>
 		'${rawUrl}&w=${width}&q=80&fm=jpg&crop=entropy&cs=tinysrgb&fit=max';
+
+	String urlWithMaxLength(int length) =>
+		'${rawUrl}&w=${length}&h=${length}&q=80&fm=jpg&crop=entropy&cs=tinysrgb&fit=max';
 
 
 }

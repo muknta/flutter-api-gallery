@@ -6,7 +6,7 @@ import 'post_data.dart';
 import 'image_page.dart';
 import 'manager.dart';
 
-final int listImageWidth = 100;
+final int listImageWidth = 130;
 final int fullImageWidth = 500;
 
 
@@ -17,7 +17,7 @@ List<Widget> imageList(List<Photo> photoList, BuildContext context) {
 Widget imageBlock(Photo photoObj, BuildContext context) {
   String author = photoObj.authorName;
   String desc = photoObj.description;
-  String link = photoObj.urlWithWidth(listImageWidth);
+  String link = photoObj.urlWithMaxLength(listImageWidth);
 
   return Column(
     children: <Widget>[
@@ -95,14 +95,19 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
         title: Text(widget.title),
-        // centerTitle: true,
       ),
       body: FutureBuilder<Album>(
         future: futureAlbum,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return Center(
-              child: ListView(
+              child: GridView.count(
+                primary: false,
+                padding: const EdgeInsets.only(left: 10, top: 10),
+                // childAspectRatio: (itemWidth / itemHeight),
+                // crossAxisSpacing: 10,
+                // mainAxisSpacing: 10,
+                crossAxisCount: 2,
                 children: imageList(snapshot.data.photoList, context),
               ),
             );
